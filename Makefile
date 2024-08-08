@@ -31,6 +31,10 @@ lint:
 		@echo "Linting the code..."
 		golangci-lint run
 
+test:
+		@echo "Running tests..."
+		go test -v ./...
+
 help:
 		@echo "Makefile for $(BINARY_NAME)"
 		@echo ""
