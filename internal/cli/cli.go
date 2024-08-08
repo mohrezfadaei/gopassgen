@@ -24,7 +24,7 @@ var rootCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("Error generating password: %v", err)
 		}
-		fmt.Println("Generated Password: ", password)
+		fmt.Println(password)
 	},
 }
 
