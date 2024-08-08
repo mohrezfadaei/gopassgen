@@ -3,6 +3,7 @@ module github.com/mohrezfadaei/passgen-cli
 go 1.22.2
 
 require (
+	github.com/atotto/clipboard v0.1.4
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
 )

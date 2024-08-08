@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/atotto/clipboard"
 	"github.com/mohrezfadaei/passgen-cli/internal/generator"
 	"github.com/spf13/cobra"
 )
@@ -14,6 +15,7 @@ var excludeLowercase bool
 var excludeDigits bool
 var excludeSymbols bool
 var includeChars string
+var copyToClipboard bool
 
 var rootCmd = &cobra.Command{
 	Use:   "passgen-cli",
@@ -25,6 +27,13 @@ var rootCmd = &cobra.Command{
 			log.Fatalf("Error generating password: %v", err)
 		}
 		fmt.Println(password)
+		if copyToClipboard {
+			err := clipboard.WriteAll(password)
+			if err != nil {
+				log.Fatalf("Error copying to clipboard: %v", err)
+			}
+			fmt.Println("Password copied to clipboard")
+		}
 	},
 }
 
@@ -39,4 +48,5 @@ func init() {
 	rootCmd.Flags().BoolVar(&excludeDigits, "no-digits", false, "Exclude digits")
 	rootCmd.Flags().BoolVar(&excludeSymbols, "no-symbols", false, "Exclude symbols")
 	rootCmd.Flags().StringVar(&includeChars, "include-chars", "", "Include specific characters (incl., $@#$%^&*()_+{}|:\"<>?,./~`)")
+	rootCmd.Flags().BoolVarP(&copyToClipboard, "copy", "c", false, "Copy password to clipboard")
 }
