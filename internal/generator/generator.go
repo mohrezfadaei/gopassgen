@@ -15,7 +15,7 @@ const (
 	symbols               = "$@#$%^&*()_+{}|:\"<>?,./~`"
 )
 
-func GeneratePassword(length int, excludeUppercase, excludeLowercase, excludeDigits, excludeSymbols bool, includeChars string) (string, error) {
+func GeneratePassword(length int, excludeUppercase, excludeLowercase, excludeDigits, excludeSymbols bool, includeChars, justInclude string) (string, error) {
 	if length <= 0 {
 		length = defaultPasswordLength
 	}
@@ -26,22 +26,26 @@ func GeneratePassword(length int, excludeUppercase, excludeLowercase, excludeDig
 
 	var charset string
 
-	if !excludeUppercase {
-		charset += uppercaseLetters
-	}
-	if !excludeLowercase {
-		charset += lowercaseLetters
-	}
-	if !excludeDigits {
-		charset += digits
-	}
-	if !excludeSymbols {
-		charset += symbols
-	}
-	if includeChars != "" {
+	if justInclude != "" {
+		charset = justInclude
+	} else {
+		if !excludeUppercase {
+			charset += uppercaseLetters
+		}
+		if !excludeLowercase {
+			charset += lowercaseLetters
+		}
+		if !excludeDigits {
+			charset += digits
+		}
+		if !excludeSymbols {
+			charset += symbols
+		}
+		if includeChars != "" {
+			charset += includeChars
+		}
 		charset += includeChars
 	}
-	charset += includeChars
 
 	if charset == "" {
 		return "", errors.New("no characters available to generate password")

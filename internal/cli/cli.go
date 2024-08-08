@@ -15,6 +15,7 @@ var excludeLowercase bool
 var excludeDigits bool
 var excludeSymbols bool
 var includeChars string
+var justInclude string
 var copyToClipboard bool
 
 var rootCmd = &cobra.Command{
@@ -22,7 +23,14 @@ var rootCmd = &cobra.Command{
 	Short: "Password and Key Generator CLI",
 	Long:  "A command-line application to generate passwords and keys",
 	Run: func(cmd *cobra.Command, args []string) {
-		password, err := generator.GeneratePassword(length, excludeUppercase, excludeLowercase, excludeDigits, excludeSymbols, includeChars)
+		if includeChars != "" && justInclude != "" {
+			log.Fatalf("Flags --include-chars and --just-include cannot be used together")
+		}
+		if (excludeUppercase || excludeLowercase || excludeDigits || excludeSymbols) && justInclude != "" {
+			log.Fatalf("Flags --exclude-uppercase, --exclude-lowercase, --exclude-digits, and --exclude-symbols cannot be used together with --just-include")
+		}
+
+		password, err := generator.GeneratePassword(length, excludeUppercase, excludeLowercase, excludeDigits, excludeSymbols, includeChars, justInclude)
 		if err != nil {
 			log.Fatalf("Error generating password: %v", err)
 		}
@@ -48,5 +56,6 @@ func init() {
 	rootCmd.Flags().BoolVar(&excludeDigits, "no-digits", false, "Exclude digits")
 	rootCmd.Flags().BoolVar(&excludeSymbols, "no-symbols", false, "Exclude symbols")
 	rootCmd.Flags().StringVar(&includeChars, "include-chars", "", "Include specific characters (incl., $@#$%^&*()_+{}|:\"<>?,./~`)")
+	rootCmd.Flags().StringVar(&justInclude, "just-include", "", "Just include specific characters (excl., @#$%^&)")
 	rootCmd.Flags().BoolVarP(&copyToClipboard, "copy", "c", false, "Copy password to clipboard")
 }
