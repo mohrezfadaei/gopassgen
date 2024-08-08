@@ -7,9 +7,28 @@ BINARY_SRC=$(BUILD_DIR)/$(BINARY_NAME)
 all: build
 
 build:
-		@echo "Building the binary..."
+		@echo "Building the binary for the current OS and architecture..."
 		go build -o $(BINARY_SRC) $(MAIN_SRC)
 		chmod +x $(BINARY_SRC)
+
+build-windows:
+		@echo "Building the binary for Windows..."
+		GOOS=windows GOARCH=amd64 go build -o $(BINARY_SRC)-windows-amd64.exe $(MAIN_SRC)
+		GOOS=windows GOARCH=386 go build -o $(BINARY_SRC)-windows-386.exe $(MAIN_SRC)
+
+build-macos:
+		@echo "Building the binary for macOS..."
+		GOOS=darwin GOARCH=amd64 go build -o $(BINARY_SRC)-darwin-amd64 $(MAIN_SRC)
+		GOOS=darwin GOARCH=arm64 go build -o $(BINARY_SRC)-darwin-arm64 $(MAIN_SRC)
+
+build-linux:
+		@echo "Build the binary for Linux..."
+		GOOS=linux GOARCH=amd64 go build -o $(BINARY_SRC)-linux-amd64 $(MAIN_SRC)
+		GOOS=linux GOARCH=386 go build -o $(BINARY_SRC)-linux-386 $(MAIN_SRC)
+		GOOS=linux GOARCH=arm64 go build -o $(BINARY_SRC)-linux-arm64 $(MAIN_SRC)
+		GOOS=linux GOARCH=arm go build -o $(BINARY_SRC)-linux-arm $(MAIN_SRC)
+
+build-all: build-windows build-darwin build-linux
 
 run: build
 		@echo "Running the binary..."
