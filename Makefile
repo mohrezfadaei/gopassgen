@@ -17,7 +17,7 @@ run: build
 
 clean:
 		@echo "Cleaning up..."
-		@if [ -f $BINARY_SRC ]; then rm $(BINARY_SRC); fi
+		@if [ -f $(BINARY_SRC) ]; then rm $(BINARY_SRC); fi
 
 deps:
 		@echo "Installing dependencies..."
