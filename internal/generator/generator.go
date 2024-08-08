@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	DefaultPasswordLength = 16
+	defaultPasswordLength = 16
 	uppercaseLetters      = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	lowercaseLetters      = "abcdefghijklmnopqrstuvwxyz"
 	digits                = "0123456789"
@@ -17,7 +17,11 @@ const (
 
 func GeneratePassword(length int, excludeUppercase, excludeLowercase, excludeDigits, excludeSymbols bool, includeChars string) (string, error) {
 	if length <= 0 {
-		length = DefaultPasswordLength
+		length = defaultPasswordLength
+	}
+
+	if excludeUppercase && excludeLowercase && excludeDigits && excludeSymbols && includeChars == "" {
+		return "", errors.New("no characters to generate password")
 	}
 
 	var charset string
