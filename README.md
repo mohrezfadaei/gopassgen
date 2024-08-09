@@ -1,4 +1,4 @@
-# Go Password Generator CLI
+# gopassgen (Go password generator)
 
 A command-line application to generate random passwords and keys, with options to customize the password characteristics and copy the generated password to the clipboard.
 

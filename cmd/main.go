@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/mohrezfadaei/passgen-cli/internal/cli"
+	"github.com/mohrezfadaei/gopassgen/internal/cli"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module github.com/mohrezfadaei/passgen-cli
+module github.com/mohrezfadaei/gopassgen
 
 go 1.22.2
 

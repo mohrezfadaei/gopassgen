@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/atotto/clipboard"
-	"github.com/mohrezfadaei/passgen-cli/internal/generator"
+	"github.com/mohrezfadaei/gopassgen/internal/generator"
 	"github.com/spf13/cobra"
 )
 

@@ -1,4 +1,4 @@
-BINARY_NAME=passgen
+BINARY_NAME=gopassgen
 SRC_DIR=./cmd
 MAIN_SRC=$(SRC_DIR)/main.go
 BUILD_DIR=./build/bin
